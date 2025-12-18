@@ -1,0 +1,22 @@
+header, main, footer {
+  border: 5px solid red;
+  width: 100vw;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+}
+
+header nav ul {
+  list-style: none;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    text-align: center;
+}
