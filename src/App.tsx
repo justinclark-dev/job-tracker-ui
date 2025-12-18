@@ -1,31 +1,17 @@
+import { BrowserRouter } from 'react-router-dom'
 import './App.css'
+import Navbar from './components/common/Navbar'
+import AppContent from './components/common/AppContent'
+import Footer from './components/common/Footer'
 
 function App() {
 
   return (
-    <>
-      <header>
-        <section>
-          <nav>
-            <ul>
-              <li>
-                HOME
-              </li>
-            </ul>
-          </nav>
-        </section>
-      </header>
-      <main>
-        <section>
-          <h1>Main Section</h1>
-        </section>
-      </main>
-      <footer>
-        <section>
-          @footer
-        </section>
-      </footer>
-    </>
+    <BrowserRouter>
+      <Navbar />
+      <AppContent />
+      <Footer />
+    </BrowserRouter>
   )
 }
 
