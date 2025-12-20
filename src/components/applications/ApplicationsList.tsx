@@ -1,5 +1,5 @@
 import './ApplicationsList.css';
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { fetchApplications } from '../../services/job_tracker_api';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,99 +7,56 @@ const Applications = () => {
 
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
+  // https://www.webdevtutor.net/blog/typescript-typecast
+  // explicitly cast error as either or string or null
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   
-  /** Claude AI Help START *************************************************************** START
+  /** Claude AI Help ***************************************************************
    *
    * I used extensive help from Claude AI in order to get the tool tip to follow the user's
-   * mouse as it traverses each row of the Job Applications data table. This entire section
-   * as denoted with the START and END comments, was produced by AI.
+   * mouse as it traverses each row of the Job Applications data table. This section
+   * was produced by AI.
    * 
    * Here is a link to that AI chat interation:
    * https://claude.ai/share/faf17c53-63b8-4096-b529-88dda54d9b34
    */
   const tableContainerRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
-  interface TooltipState {
-    show: boolean;
-    x: number;
-    y: number;
-    rowId: number | null;
-  }
+  // Only track visibility in state, NOT position
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const currentRowId = useRef<number | null>(null);
 
-  const [tooltip, setTooltip] = useState<TooltipState>({ 
-    show: false, 
-    x: 0, 
-    y: 0,
-    rowId: null
-  });
-  
   const handleRowEnter = (rowId: number) => {
-    setTooltip(prev => ({ ...prev, show: true, rowId }));
+    currentRowId.current = rowId;
+    setTooltipVisible(true);
   };
 
   const handleRowLeave = (rowId: number) => {
-    setTooltip(prev => {
-      if (prev.rowId === rowId) {
-        return { show: false, x: 0, y: 0, rowId: null };
-      }
-      return prev;
-    });
+    if (currentRowId.current === rowId) {
+      currentRowId.current = null;
+      setTooltipVisible(false);
+    }
   };
 
+  // https://www.webdevtutor.net/blog/typescript-type-for-mouse-click-event
+  // Update position directly via DOM manipulation - no state updates!
   const handleMouseMove = (e: React.MouseEvent) => {
-    // Check if mouse is actually inside the container
-    if (tableContainerRef.current && tooltip.show) {
-      // https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
-      // The Element.getBoundingClientRect() method returns a DOMRect object 
-      // providing information about the size of an element and its position 
-      // relative to the viewport.
-      const rect = tableContainerRef.current.getBoundingClientRect();
-      const isInside = 
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
-      
-      if (!isInside) {
-        // Mouse is outside the container, hide tooltip
-        setTooltip({ show: false, x: 0, y: 0, rowId: null });
-        return;
-      }
-      
-      setTooltip(prev => ({ ...prev, x: e.clientX, y: e.clientY }));
+    if (tooltipVisible && tooltipRef.current) {
+      // Directly manipulate the tooltip position without triggering re-renders
+      tooltipRef.current.style.left = `${e.clientX + 15}px`;
+      tooltipRef.current.style.top = `${e.clientY + 15}px`;
     }
   };
 
   const handleContainerLeave = () => {
-    setTooltip({ show: false, x: 0, y: 0, rowId: null });
+    currentRowId.current = null;
+    setTooltipVisible(false);
   };
 
-  // Global mousemove listener as backup
-  useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (tooltip.show && tableContainerRef.current) {
-        const rect = tableContainerRef.current.getBoundingClientRect();
-        const isInside = 
-          e.clientX >= rect.left &&
-          e.clientX <= rect.right &&
-          e.clientY >= rect.top &&
-          e.clientY <= rect.bottom;
-        
-        if (!isInside) {
-          setTooltip({ show: false, x: 0, y: 0, rowId: null });
-        }
-      }
-    };
-
-    document.addEventListener('mousemove', handleGlobalMouseMove);
-    return () => document.removeEventListener('mousemove', handleGlobalMouseMove);
-  }, [tooltip.show]);
-  /** Claude AI Help END **************************************************************** END */
-
-
-  /** Claude AI Help START *************************************************************** START
+  /** Claude AI Help ***************************************************************
    *
    * I couldn't figure out how to fix the TypeScript type error on "applications":
    *        function Application({ applications }) {...}
@@ -117,20 +74,7 @@ const Applications = () => {
    * https://claude.ai/share/f162cd17-75a3-4e05-9fe7-945e967b352a
    */
 
-  /** error useState()
-   * This is a TypeScript generic that tells useState what types of values the state can hold.
-   * This state variable can be either a string OR null, nothing else.
-   * The setError function can only accept values that match the type we declared: string | null.
-   * Using null as a possible value gives us a clear way to represent "no error".
-   * 
-   * Example used:
-   * setError(error instanceof Error ? error.message : 'An error occurred')
-   */
-  const [error, setError] = useState<string | null>(null);
-
-  /**
-   * Represents a single job application.
-   */
+  // Defines the structure of a single job application
   interface ApplicationData {
     id: number;
     user_id: string;
@@ -147,15 +91,11 @@ const Applications = () => {
     updated_at: string;
   }
 
-  /**
-   * Props for the Application component. 
-   * Allows us to give type annotation to our applications prop.
-   * @property {ApplicationData[]} applications - Array of job application data to display.
-   */
   interface ApplicationProps {
+    // https://www.geeksforgeeks.org/typescript/what-is-interfaces-and-explain-it-in-reference-of-typescript/
+    // since ApplicationData is an interface, it can be used as type for applications
     applications: ApplicationData[];
   }
-  /** Claude AI Help END **************************************************************** END */
 
   useEffect(() => {
     async function loadApplications() {
@@ -163,10 +103,6 @@ const Applications = () => {
         const data = await fetchApplications();
         setApplications(data);
       } catch (error) {
-        /**
-         * If error is an Error object, set the error state to error.message.
-         * Otherwise, set the error state to the generic string 'An error occurred'
-         */
         setError(error instanceof Error ? error.message : 'An error occurred');
       } finally {
         setLoading(false);
@@ -178,6 +114,10 @@ const Applications = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
+
+  const handleRowClick = (id: number) => {
+    navigate(`/applications/${id}`);
+  };
 
   const Application = ({ applications }: ApplicationProps) => {
     return (
@@ -202,9 +142,9 @@ const Applications = () => {
             {applications.map((application) => (
               <tr 
                 key={application.id} 
+                onClick={() => handleRowClick(application.id)}
                 onMouseEnter={() => handleRowEnter(application.id)}
                 onMouseLeave={() => handleRowLeave(application.id)}
-                onClick={() => navigate(`/applications/${application.id}`)}
               >
                 <td>{application.company_name}</td>
                 <td>{application.position_title}</td>
@@ -216,11 +156,13 @@ const Applications = () => {
             ))}
           </tbody>
         </table>
-        {tooltip.show && (
-          <div className='tooltip'
+        {tooltipVisible && (
+          <div 
+            ref={tooltipRef}
+            className='tooltip'
             style={{
-              left: tooltip.x + 15,
-              top: tooltip.y + 15,
+              left: 0,
+              top: 0,
             }}
           >
             Click to open this job application.
