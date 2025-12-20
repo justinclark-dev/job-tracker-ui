@@ -1,4 +1,5 @@
 import './Application.css';
+import '../common/Forms.css'
 import { useEffect, useState } from 'react';
 import { fetchApplicationById } from '../../services/job_tracker_api';
 import { useParams } from "react-router-dom";
@@ -63,6 +64,7 @@ const Applications = () => {
 
   return (
     <form>
+      <h1>Job Application</h1>
       <label>Company Name:
         <input name="company_name" value={applicationValues.company_name} onChange={handleChange} readOnly />
       </label>
@@ -96,6 +98,22 @@ const Applications = () => {
       <label>Updated At:
         <input name="updated_at" value={applicationValues.updated_at} onChange={handleChange} readOnly />
       </label>
+      <div>
+        
+        
+        <button className='delete'>
+          Delete
+        </button>
+        <button className='new'>
+          New
+        </button>
+        <button className='save'>
+          Save
+        </button>
+        <button className='edit'>
+          Edit
+        </button>
+      </div>
     </form>
   );
 }
