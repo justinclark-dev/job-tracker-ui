@@ -5,7 +5,6 @@ const AppContent = () => {
   return (
     <main>
       <section>
-        <h1>Main Section</h1>
         <Router />
       </section>
     </main>

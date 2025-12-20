@@ -1,12 +1,17 @@
 header, main, footer {
-  border: 5px solid red;
   width: 100vw;
+  padding: 2rem;
 }
 
 #root {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
+}
+
+header {
+  background-color: var(--header);
+  z-index: 99;
 }
 
 header nav ul {
@@ -19,4 +24,13 @@ main {
 
 footer {
     text-align: center;
+    background-color: var(--footer);
+    /* position: sticky; */
 }
+
+h1 {
+  /* color: rgb(65, 166, 244); */
+  background-color: rgb(7, 36, 70);
+  color: rgb(10, 93, 189);
+}
+

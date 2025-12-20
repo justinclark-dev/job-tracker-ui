@@ -1,15 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-  --background-color: #052136;
+  --bg-color: #052136;
   --font-color: #fff;
+  --header: #031828;
+  --links: #0490fb;
+  --scrollbar-track: rgba(0, 0, 0, 0.78);
+  --footer: #041e49;
+  --divider-line: #045594;
+  --input-border: rgb(9, 48, 107);
+  --input-bg: rgba(9, 48, 107, 0.395);
+  --input-font-color: rgb(234, 238, 245);
+  --alt-row-bg-color: #0470c220;
+  --row-hover-bg-color: #0470c241;
+
 
   font-family: 'Montserrat';
   line-height: 1.5;
   font-weight: 400;
 
-  background-color: var(--background-color);
+  background-color: var(--bg-color);
   color: var(--font-color);
 
   font-synthesis: none;
@@ -23,7 +34,7 @@
   margin: 0;
   box-sizing: border-box;
   scrollbar-width: thin;
-  scrollbar-color: var(--background-color) rgba(0, 0, 0, 0.78); 
+  scrollbar-color: var(--bg-color) var(--scrollbar-track); 
 }
 
 html, body {

@@ -1,3 +1,8 @@
+header nav ul {
+  display: flex;
+}
+
 header nav a {
-  color: white;
+  color: var(--links);
+  padding-right: 1rem;
 }
