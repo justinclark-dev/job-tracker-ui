@@ -14,6 +14,17 @@
   --input-font-color: rgb(234, 238, 245);
   --alt-row-bg-color: #0470c220;
   --row-hover-bg-color: #0470c241;
+  --primary: rgb(255, 160, 0);
+  --primary-font-color: black;
+  --delete: #dc2626c9;
+  --delete-hover: #B91C1C ;
+  --new: #3B82F6;
+  --new-hover: #2563EB ;
+  --save: #10B981;
+  --save-hover: #059669 ;
+  --edit: #64748B;
+  --edit-hover: #64748ba5;
+  --btn-font-color: white;
 
 
   font-family: 'Montserrat';
