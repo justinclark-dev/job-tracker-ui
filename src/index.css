@@ -11,6 +11,7 @@
   --divider-line: #045594;
   --input-border: rgb(9, 48, 107);
   --input-bg: rgba(9, 48, 107, 0.395);
+  --select-option-bg: rgba(9, 48, 100, 0.995);
   --input-font-color: rgb(234, 238, 245);
   --alt-row-bg-color: #0470c220;
   --row-hover-bg-color: #0470c241;
@@ -25,7 +26,6 @@
   --edit: #64748B;
   --edit-hover: #64748ba5;
   --btn-font-color: white;
-
 
   font-family: 'Montserrat';
   line-height: 1.5;
