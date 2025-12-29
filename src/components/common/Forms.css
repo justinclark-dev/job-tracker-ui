@@ -11,7 +11,9 @@ form label {
 }
 
 form label > input,
-form label > textarea {
+form label > textarea,
+form label > select,
+form label > select > option {
   width: 400px;
   border: 1px solid var(--input-border);
   background-color: var(--input-bg);
@@ -23,8 +25,13 @@ form label > textarea {
   padding: 0.2rem;
 }
 
+form label > select > option {
+  background-color: var(--select-option-bg);
+}
+
 form label > input:focus,
-form label > textarea:focus {
+form label > textarea:focus,
+form label > select:focus {
   outline: 1px solid var(--divider-line);
 }
 
