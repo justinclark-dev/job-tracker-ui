@@ -167,7 +167,7 @@ const Applications = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => e.preventDefault()}>
       <h1>Job Application</h1>
       <label>Company Name:
         <input 
@@ -224,6 +224,7 @@ const Applications = () => {
         <button 
           className='save' 
           type='submit' 
+          onClick={handleSubmit}
           disabled={submitting}
         >
           {submitting ? 'Saving…' : 'Save'}
