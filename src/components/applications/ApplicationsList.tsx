@@ -1,12 +1,33 @@
 import './ApplicationsList.css';
+import '../common/Forms.css'
 import React, { useEffect, useState, useRef } from 'react';
 import { fetchApplications } from '../../services/job_tracker_api';
 import { useNavigate } from 'react-router-dom';
+import plus from '/images/plus.png';
+import { useLocation } from 'react-router-dom';
+import SuccessBanner from '../common/SuccessBanner';
 
-const Applications = () => {
+const ApplicationList = () => {
+
+  const location = useLocation();
+  const [message, setMessage] = useState('');
+
+    useEffect(() => {
+    // Check if there's a message from navigation
+    if (location.state?.message) {
+      setMessage(location.state.message);
+      
+      // Clear the message after a few seconds
+      const timer = setTimeout(() => setMessage(''), 5000);
+      
+      // Clear navigation state so message doesn't reappear on refresh
+      window.history.replaceState({}, document.title);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
 
   const [applications, setApplications] = useState([]);
-  const [loading, setLoading] = useState(true);
   
   // https://www.webdevtutor.net/blog/typescript-typecast
   // explicitly cast error as either or string or null
@@ -104,19 +125,20 @@ const Applications = () => {
         setApplications(data);
       } catch (error) {
         setError(error instanceof Error ? error.message : 'An error occurred');
-      } finally {
-        setLoading(false);
       }
     }
 
     loadApplications(); 
   }, []); 
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   const handleRowClick = (id: number) => {
     navigate(`/applications/${id}`);
+  };
+
+  const handleNewApplicationClick = () => {
+    navigate(`/applications/new`);
   };
 
   const Application = ({ applications }: ApplicationProps) => {
@@ -174,10 +196,25 @@ const Applications = () => {
 
   return (
     <>
-      <h1>Job Applications</h1>
+      {message && <SuccessBanner message={message} />}
+
+      <header>
+        <h1>Job Applications</h1>
+        <div>
+          <button 
+            type='button'
+            className='primary'
+            onClick={handleNewApplicationClick}
+          >
+            <img src={plus} className='icon' alt='Add icon' />
+            New Application
+          </button>
+        </div>
+      </header>
+      
       <Application applications={applications} />
     </>
   );
 }
 
-export default Applications;
+export default ApplicationList;

@@ -1,5 +1,5 @@
-header, main, footer {
-  width: 100vw;
+#root > header, main, footer {
+  width: 100%;
   padding: 2rem;
 }
 
@@ -9,7 +9,7 @@ header, main, footer {
     height: 100vh;
 }
 
-header {
+#root > header {
   background-color: var(--header);
   z-index: 99;
 }
@@ -18,19 +18,53 @@ header nav ul {
   list-style: none;
 }
 
+header section,
+main section,
+footer section {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
 main {
     flex: 1;
 }
 
 footer {
-    text-align: center;
     background-color: var(--footer);
-    /* position: sticky; */
+    background-color: rgb(7, 36, 70);
 }
 
-h1 {
-  /* color: rgb(65, 166, 244); */
-  background-color: rgb(7, 36, 70);
+footer section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 { 
   color: rgb(10, 93, 189);
 }
 
+.icon {
+  width: 1.2rem;
+}
+
+section {
+  max-width: 1200px;
+}
+
+section header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+section header h1 {
+  justify-self: center;
+}
+
+section header button {
+  margin-left: auto;
+}

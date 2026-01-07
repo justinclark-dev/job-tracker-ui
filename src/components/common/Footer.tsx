@@ -4,7 +4,12 @@ const Footer = () => {
   return (
     <footer>
       <section>
-        @footer
+        <p>
+          Justin Clark &copy; 2026
+        </p>
+        <p>
+          Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
+        </p>
       </section>
     </footer>
   );

@@ -1,0 +1,41 @@
+.error-banner {
+  background-color: #fcc;
+  border: 1px solid #faa;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #c33;
+}
+
+.error-banner p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.success-banner {
+  background-color: #cfc;
+  border: 1px solid #afa;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #3a3;
+}
+
+.success-banner p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.info-banner {
+  background-color: #b6f6ff;
+  border: 1px solid #91dbef;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #0c5c7a;
+}
+
+.info-banner p {
+  margin: 0;
+  font-weight: 500;
+}

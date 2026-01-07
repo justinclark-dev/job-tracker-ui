@@ -1,0 +1,27 @@
+.modal-overlay { 
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-panel { 
+  background-color: var(--select-option-bg);
+  border: 1px solid var(--links);
+  padding: 2rem;
+  border-radius: 8px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.modal-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-self: center;
+}
